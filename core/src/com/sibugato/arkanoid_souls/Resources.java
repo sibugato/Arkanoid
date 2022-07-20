@@ -3,7 +3,6 @@ package com.sibugato.arkanoid_souls;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class Resources {
@@ -14,38 +13,48 @@ public class Resources {
     private static final Sound BELL_SOUND = Gdx.audio.newSound(Gdx.files.internal("bell_sound.ogg"));
     private static final Sound DEATH_SOUND = Gdx.audio.newSound(Gdx.files.internal("You_Died.mp3"));
     private static final Sound PLATFORM_BROKE_SOUND = Gdx.audio.newSound(Gdx.files.internal("Platform_Broke.ogg"));
-    private static final Sound RING_FROCE = Gdx.audio.newSound(Gdx.files.internal("RingForce.mp3"));
+    private static final Sound RING_FORCE = Gdx.audio.newSound(Gdx.files.internal("RingForce.mp3"));
 
     private static final Music DAY_SOUND = Gdx.audio.newMusic(Gdx.files.internal("day.ogg"));
     private static final Music NIGHT_SOUND = Gdx.audio.newMusic(Gdx.files.internal("night.ogg"));
+
+    private static float masterVolume = 1;
 
 
 
     public Resources() {}
 
     public void play (String sound) {
-        if (sound.equalsIgnoreCase("BONK")) BONK_SOUND.play(0.05f);
-        else  if (sound.equalsIgnoreCase("PLATFORM_BROKE")) PLATFORM_BROKE_SOUND.play(0.27f);
-        else if (sound.equalsIgnoreCase("DEATH")) DEATH_SOUND.play(0.35f);
-        else if (sound.equalsIgnoreCase("BELL")) BELL_SOUND.play(0.37f);
-        else if (sound.equalsIgnoreCase("FORCE")) RING_FROCE.play(1f);
+        if (sound.equalsIgnoreCase("BONK")) BONK_SOUND.play(0.05f*masterVolume);
+        else  if (sound.equalsIgnoreCase("PLATFORM_BROKE")) PLATFORM_BROKE_SOUND.play(0.27f*masterVolume);
+        else if (sound.equalsIgnoreCase("DEATH")) DEATH_SOUND.play(0.35f*masterVolume);
+        else if (sound.equalsIgnoreCase("BELL")) BELL_SOUND.play(0.37f*masterVolume);
+        else if (sound.equalsIgnoreCase("FORCE")) RING_FORCE.play(1f*masterVolume);
 
         else if (sound.equalsIgnoreCase("DAY")) {
             DAY_SOUND.play();
             DAY_SOUND.setLooping(true);
-            DAY_SOUND.setVolume(0.5f);
+            DAY_SOUND.setVolume(0.5f*masterVolume);
         }
         else if (sound.equalsIgnoreCase("NIGHT")) {
             NIGHT_SOUND.play();
             NIGHT_SOUND.setLooping(true);
-            NIGHT_SOUND.setVolume(0);
+            NIGHT_SOUND.setVolume(0*masterVolume);
         }
     }
 
     public void setVolume (String sound, int volume) {
         if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume()>0 && volume == 0) DAY_SOUND.setVolume(DAY_SOUND.getVolume()-0.001f);
-        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.5f && volume == 1) DAY_SOUND.setVolume(DAY_SOUND.getVolume()+0.001f);
+        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) DAY_SOUND.setVolume(DAY_SOUND.getVolume()+0.001f);
         if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume()>0 && volume == 0) NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()-0.001f);
-        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.5f && volume == 1) NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()+0.001f);
+        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()+0.001f);
+    }
+
+    public static float getMasterVolume() {
+        return masterVolume;
+    }
+
+    public static void setMasterVolume(float masterVolume) {
+        Resources.masterVolume = masterVolume;
     }
 }
