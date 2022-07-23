@@ -14,8 +14,8 @@ public class Bird {
 
     private Sprite bird = new Sprite();
     private Sprite bird2 = new Sprite();
-    private final Sprite CHAIN = new Sprite(new Texture("chain.png"));
-    private final Sprite CHAIN2 = new Sprite(new Texture("chain.png"));
+    private final Sprite CHAIN = new Sprite(Resources.TEXTURE_ATLAS.findRegion("chain"));
+    private final Sprite CHAIN2 = new Sprite(Resources.TEXTURE_ATLAS.findRegion("chain"));
     private final Animator ANIMATION_RIGHT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationBird"),3,3,0.1f,true,false);
     private final Animator ANIMATION_LEFT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationBird"),3,3,0.1f,true,true);
     private final Animator ANIMATION_RIGHT_2 = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationBird"),3,3,0.105f,true,false);

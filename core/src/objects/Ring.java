@@ -10,10 +10,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sibugato.arkanoid_souls.BodyMaker;
 import com.sibugato.arkanoid_souls.Constants;
+import com.sibugato.arkanoid_souls.Resources;
 
 public class Ring {
 
-    private Sprite sprite = new Sprite(new Texture("LOTR.png"));
+    private Sprite sprite = new Sprite(Resources.TEXTURE_ATLAS.findRegion("LOTR"));
     private Vector2 position;
     private Body body;
     float rotate = 0;

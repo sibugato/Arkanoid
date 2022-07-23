@@ -14,15 +14,9 @@ import com.sibugato.arkanoid_souls.Resources;
 
 public class Bell {
 
-    private Sprite sprite;
+    private Sprite sprite, bellImpulse1, bellImpulse2, bellImpulse3;
     private Vector2 position;
     private Body body;
-
-    private Sprite
-            bellImpulse1 = new Sprite(new Texture("bellImpulse.png")),
-            bellImpulse2 = new Sprite(new Texture("bellImpulse.png")),
-            bellImpulse3 = new Sprite(new Texture("bellImpulse.png"));
-
     private float bellImpulseAlpha = 0.5f;
     private boolean isHit = false;
 
@@ -31,6 +25,9 @@ public class Bell {
         Vector2[] shape = {new Vector2(0, 0), new Vector2(2.5f, 0), new Vector2(2.5f, 0.225f), new Vector2(1.8f, 2.1f), new Vector2(0.6f, 2.1f),  new Vector2(0, 0.225f),new Vector2(0,0)};
         body = BodyMaker.createChain(world,x,y,shape, BodyDef.BodyType.StaticBody,Constants.FILTER_PLAYER,1,0,0, 0,true,number);
 
+        bellImpulse1 = new Sprite(Resources.TEXTURE_ATLAS.findRegion("bellImpulse"));
+        bellImpulse2 = new Sprite(Resources.TEXTURE_ATLAS.findRegion("bellImpulse"));
+        bellImpulse3 = new Sprite(Resources.TEXTURE_ATLAS.findRegion("bellImpulse"));
         sprite = new Sprite(Resources.TEXTURE_ATLAS.findRegion("bell"));
         sprite.setSize(2.5f,10);
         sprite.setPosition(x,y-0.59f);
@@ -69,6 +66,10 @@ public class Bell {
             bellImpulse3.scale(0.05f);
             bellImpulse3.setAlpha(bellImpulseAlpha + 0.2f);
         }
+    }
+
+    public void impulseRender (SpriteBatch sb) {
+
     }
 
     public Vector2 getPosition() {

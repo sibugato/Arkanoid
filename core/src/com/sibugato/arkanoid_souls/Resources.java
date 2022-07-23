@@ -32,7 +32,7 @@ public class Resources {
                 DEATH_SOUND.play(0.5f*masterVolume);
                 break;
             case ("BELL") :
-                BELL_SOUND.play(0.37f*masterVolume);
+                BELL_SOUND.play(0.35f*masterVolume);
                 break;
             case ("FORCE") :
                 RING_FORCE_SOUND.play(1f*masterVolume);

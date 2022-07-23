@@ -56,7 +56,7 @@ public class Stage_1 extends State {
     private final Resources SOUND;
 
     private final ExtendViewport EXTENDED_VIEWPORT;
-    private Viewport vp;
+    private Viewport viewport;
     private final Box2DDebugRenderer DEBUG_RENDERER = new Box2DDebugRenderer();
     private final SpriteBatch SPRITE_BATCH;
     private PolygonSpriteBatch batch;
@@ -68,8 +68,7 @@ public class Stage_1 extends State {
     private Texture background  = new Texture("Background_stage_1.jpg");
     private Sprite youDiedScreen = new Sprite(new Texture("YouDiedScreen.jpg"));
     private Sprite arrow = new Sprite();
-    private Animator arrow_anime = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationArrow"),1,18,0.8f,false,false);
-
+    private Animator arrowAnimation = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationArrow"),1,18,0.8f,false,false);
 
     private ArrayList<Platform> platforms = new ArrayList<>();
     private Player player;
@@ -83,9 +82,8 @@ public class Stage_1 extends State {
     private Bell bell1, bell2;
     private PointLight lightSun1, lightSun2, lightMoon1, lightMoon2, lightBall, portalLight;;
 
-
     private boolean is_start = false;
-    private boolean is_start2 = false;
+    public static boolean is_start2 = false;
     private boolean is_arrow = true;
     private boolean is_vortex_glowing = false;
     private float x_speed = 0;
@@ -96,8 +94,9 @@ public class Stage_1 extends State {
     private float youDiedScreenAlpha = 0;
 
 
-
     public Stage_1(GameStateManager gsm) {
+
+        //general stage configuration
         super(gsm);
         Constants.isGameRestarted = false;
         Constants.resetConstants();
@@ -111,7 +110,7 @@ public class Stage_1 extends State {
         SPRITE_BATCH = new SpriteBatch();
         youDiedScreen.setSize(24,40);
 
-
+        // objects creating
         ball = new Ball(-10,10, WORLD);
         player = new Player(10,3, WORLD);
         vortex = new Vortex(12,20, WORLD);
@@ -121,18 +120,15 @@ public class Stage_1 extends State {
         bird1 = new Bird(30,10, WORLD);
         bird2 = new Bird(-42,30, WORLD);
         ring = new Ring(12,20, WORLD);
-
         font = new BitmapFont();
 
         Vector2[] shapeWalls = {new Vector2(0, 0), new Vector2(0, (float) ArkanoidSouls.HEIGHT/20), new Vector2((float) ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20), new Vector2((float) ArkanoidSouls.WIDTH/20, 0)};
         bodyWalls = BodyMaker.createChain(WORLD,0,0,shapeWalls, BodyDef.BodyType.StaticBody,Constants.FILTER_WALLS,0,0,0,0,false,"wall");
 
         bodyGround = BodyMaker.createBox(WORLD,-40,0,120,3, BodyDef.BodyType.StaticBody,Constants.FILTER_GROUND,0,0,0,0,false,"ground");
-
         create_platforms();
         create_light();
-      //  create_particles();
-
+        //create_particles();    !!(temporarily disabled)!!
         arrow.setSize(1,1.327f);
         arrow.setPosition(11.5f,4.8f);
         arrow.setOrigin(arrow.getWidth()/2,-2f);
@@ -145,38 +141,30 @@ public class Stage_1 extends State {
         fontParameter.minFilter = Texture.TextureFilter.Linear;
         font = fontGenerator.generateFont(fontParameter);
         font.getData().setScale(0.03f);
-
-
-
     }
 
     public void update(float dt) {
         handleInput();
-        for (Platform P : platforms) P.update(dt);
-        if (!is_arrow) ball.update(dt);
+        for (Platform P : platforms) {
+            P.update(dt);
+        }
+        if (!is_arrow) {
+            ball.update(dt);
+        }
         player.update(dt);
         vortex.update(dt);
         sunAndMoon.update(dt);
         bird1.update(dt);
         bird2.update(dt);
         ring.update(dt);
-
-        ballSpeedLimiter();
-
-        if ((ball.getPosition().y <= 1 && player.isAlive)
-                || (ball.getPosition().y >= 40 && Constants.isVortexActive && player.isAlive)
-                || (ball.getPosition().x <= 0 && Constants.isVortexActive && player.isAlive)
-                || (ball.getPosition().x >= 24 && Constants.isVortexActive && player.isAlive)) {
-            player.isAlive = false;
-            SOUND.play("DEATH");
-        }
-
+        ball.ballSpeedLimiter();
+        ballOutTheScreenCheck();
         if (Ball.isBounce) {
             Ball.isBounce = false;
             SOUND.play("BONK");
         }
 
-        if (arrow_anime.getIsEnd()) {
+        if (arrowAnimation.getIsEnd()) {
             is_arrow = false;
             is_start = true;
         }
@@ -210,8 +198,12 @@ public class Stage_1 extends State {
             ring.getSprite().setAlpha(ringAlpha);
             ring.getBody().getFixtureList().get(0).setFilterData(Constants.FILTER_VOID);
         }
-        if (Constants.isBell1Hit && Constants.isBell2Hit) activatePortal();
-        if (Constants.isVortexActive && vortex.getAnimationIsEnd()) endGame();
+        if (Constants.isBell1Hit && Constants.isBell2Hit) {
+            activatePortal();
+        }
+        if (Constants.isVortexActive && vortex.getAnimationIsEnd()) {
+            endGame();
+        }
         if (Constants.isVortexActive && ballAlpha > 0.1f) {
             ballAlpha -= 0.01f;
             ball.getSPRITE().setAlpha(ballAlpha);
@@ -225,30 +217,35 @@ public class Stage_1 extends State {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         WORLD.step(1/60f,4,4);
-        if (!WORLD.isLocked() && !Constants.destroyList.isEmpty()) body_delete();
-
+        if (!WORLD.isLocked() && !Constants.destroyList.isEmpty()) {
+            body_delete();
+        }
         SPRITE_BATCH.begin();
         SPRITE_BATCH.draw(background,0,0,24,40);
-        if (is_arrow) {arrow.setRegion(arrow_anime.getCurrentFrame()); arrow.draw(SPRITE_BATCH);} else  ball.render(SPRITE_BATCH);
+        if (is_arrow) {
+            arrow.setRegion(arrowAnimation.getCurrentFrame());
+            arrow.draw(SPRITE_BATCH);
+        }
+        else {
+            ball.render(SPRITE_BATCH);
+        }
         SPRITE_BATCH.setProjectionMatrix(camera.combined);
-        //render_particles();
+        // render_particles();    !!temporarily disabled)!!
         SPRITE_BATCH.setProjectionMatrix(camera.combined);
         player.render(SPRITE_BATCH);
-
-
         ring.render(SPRITE_BATCH);
-        for (Platform P : platforms) P.render(SPRITE_BATCH);
+        for (Platform P : platforms) {
+            P.render(SPRITE_BATCH);
+        }
         sunAndMoon.render(SPRITE_BATCH);
-        //boss.render(sb);
         bird1.render(SPRITE_BATCH);
         bird2.render(SPRITE_BATCH);
         bell1.render(SPRITE_BATCH);
         bell2.render(SPRITE_BATCH);
         vortex.render(SPRITE_BATCH);
-       // if (is_start2) font.draw(SPRITE_BATCH,String.valueOf((int)Math.abs(ball.getBody().getLinearVelocity().x) + (int)Math.abs(ball.getBody().getLinearVelocity().y)), 22, 3,0,1,true);
-        //else font.draw(SPRITE_BATCH,"0", 22.1f, 3,0.5f,1,true);
+        // if (is_start2) font.draw(SPRITE_BATCH,String.valueOf((int)Math.abs(ball.getBody().getLinearVelocity().x) + (int)Math.abs(ball.getBody().getLinearVelocity().y)), 22, 3,0,1,true);
+        // else font.draw(SPRITE_BATCH,"0", 22.1f, 3,0.5f,1,true);
         SPRITE_BATCH.end();
-
 
         //DEBUG_RENDERER.render(WORLD, camera.combined);
         rayHandler.updateAndRender();
@@ -259,7 +256,9 @@ public class Stage_1 extends State {
                 youDiedScreenAlpha = youDiedScreenAlpha + 0.0035f;
                 youDiedScreen.setAlpha(youDiedScreenAlpha);
             }
-            else if(youDiedScreenAlpha >0.99f) Constants.isRestartAllowed = true;
+            else if (youDiedScreenAlpha >0.99f) {
+                Constants.isRestartAllowed = true;
+            }
             youDiedScreen.draw(SPRITE_BATCH);
             SPRITE_BATCH.end();
         }
@@ -267,36 +266,29 @@ public class Stage_1 extends State {
 
     public void create_particles() {
 
-         //We need a viewport for proper camerawork
-
-        vp = new FitViewport(ArkanoidSouls.WIDTH/20, ArkanoidSouls.HEIGHT/20);
-        vp.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        //We need a viewport for proper camerawork
+        viewport = new FitViewport(ArkanoidSouls.WIDTH/20, ArkanoidSouls.HEIGHT/20);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
 
         // We may need polygon sprite batch to render more complex VFX such us beams
-
         batch = new PolygonSpriteBatch();
-        batch.setProjectionMatrix(vp.getCamera().projection);
+        batch.setProjectionMatrix(viewport.getCamera().projection);
 
 
         // Prepare the texture atlas.
         // Normally just load Texture Atlas,  but for the sake of demo this will be creating fake atlas from just one texture.
-
         TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("fire.png")));
         TextureAtlas textureAtlas = new TextureAtlas();
         textureAtlas.addRegion("fire", textureRegion);
 
 
         //Creating particle effect instance from particle effect descriptor
-
         ParticleEffectDescriptor effectDescriptor = new ParticleEffectDescriptor(Gdx.files.internal("fire.p"), textureAtlas);
         effect = effectDescriptor.createEffectInstance();
-
         defaultRenderer = new SpriteBatchParticleRenderer();
         effect.setPosition(-8.5f,-15);
         defaultRenderer.setBatch(batch);
-
-
     }
 
     public void render_particles() {
@@ -308,54 +300,67 @@ public class Stage_1 extends State {
         batch.begin();
         effect.render(defaultRenderer);
         batch.end();
-        /** for (Particle P : effect.getEmitters().get(0).getActiveParticles()){
-
-                TorchLight TL = new TorchLight(P.position,rayHandler,world);
-                TL.start();
-        } */
-
     }
 
     protected void handleInput() {
         if (Constants.isRestartAllowed) {
             Constants.isGameRestarted = true;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) gameStateManager.push(new Stage_1(gameStateManager));
-            if(Gdx.input.justTouched()) {  Constants.isTouchUp = false; gameStateManager.push(new TemporaryScreen(gameStateManager)); }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                gameStateManager.push(new Stage_1(gameStateManager));
+            }
+            if(Gdx.input.justTouched()) {
+                Constants.isTouchUp = false; gameStateManager.push(new TemporaryScreen(gameStateManager));
+            }
         }
 
-
-            if (!is_arrow){
-        if(InputController.isRightKeyDown && !InputController.isLeftKeyDown) player.move("right", TOUCH_POSITION);
-        if(InputController.isLeftKeyDown && !InputController.isRightKeyDown) player.move("left", TOUCH_POSITION);
-        if(!InputController.isLeftKeyDown && !InputController.isRightKeyDown) player.move("stop", TOUCH_POSITION);
-
-        if(Gdx.input.isTouched()) {
+        if (!is_arrow) {
+            if (InputController.isRightKeyDown && !InputController.isLeftKeyDown) {
+                player.move("right", TOUCH_POSITION);
+            }
+            if (InputController.isLeftKeyDown && !InputController.isRightKeyDown) {
+                player.move("left", TOUCH_POSITION);
+            }
+            if (!InputController.isLeftKeyDown && !InputController.isRightKeyDown) {
+                player.move("stop", TOUCH_POSITION);
+            }
+            if (Gdx.input.isTouched()) {
             TOUCH_POSITION.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(TOUCH_POSITION);
             player.move("touch",TOUCH_POSITION);
-        }
-        else if (Constants.isTouchUp) {Constants.isTouchUp = false;}
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            //gsm.push(new Stage_1(gsm));
-        }
             }
+            else if (Constants.isTouchUp) {
+            Constants.isTouchUp = false;
+            }
+        }
 
-            else {
-        if(InputController.isRightKeyDown && !InputController.isLeftKeyDown && arrow.getRotation()<=60 && arrow.getRotation()>= -60) arrow.setRotation(arrow.getRotation() -2);
-        if(InputController.isLeftKeyDown && !InputController.isRightKeyDown && arrow.getRotation()>=-60 && arrow.getRotation()<=60) arrow.setRotation(arrow.getRotation() +2);
-
-        if(Gdx.input.isTouched()) {
+        else {
+            if (InputController.isRightKeyDown && !InputController.isLeftKeyDown && arrow.getRotation()<=60 && arrow.getRotation()>= -60) {
+                arrow.setRotation(arrow.getRotation() -2);
+            }
+            if (InputController.isLeftKeyDown && !InputController.isRightKeyDown && arrow.getRotation()>=-60 && arrow.getRotation()<=60) {
+                arrow.setRotation(arrow.getRotation() +2);
+            }
+            if (Gdx.input.isTouched()) {
             TOUCH_POSITION.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(TOUCH_POSITION);
             arrow.setRotation(-(TOUCH_POSITION.x-12) * 7.5f );
-
-        }
-        if (arrow.getRotation()<-60) arrow.setRotation(-60); else if (arrow.getRotation()>60) arrow.setRotation(60);
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {is_arrow = false; is_start = true;}
-        else if (Constants.isTouchUp && !Constants.isGameRestarted) {is_arrow = false; is_start = true; Constants.isTouchUp = false;}
             }
-
+            if (arrow.getRotation()<-60) {
+                arrow.setRotation(-60);
+            }
+            else if (arrow.getRotation()>60) {
+                arrow.setRotation(60);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                is_arrow = false;
+                is_start = true;
+            }
+            else if (Constants.isTouchUp && !Constants.isGameRestarted) {
+                is_arrow = false;
+                is_start = true;
+                Constants.isTouchUp = false;
+            }
+        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {}
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {}
     }
@@ -390,7 +395,7 @@ public class Stage_1 extends State {
     public void create_light() {
         rayHandler = new RayHandler(WORLD);
         rayHandler.setCombinedMatrix(camera.combined);
-        rayHandler.setAmbientLight(0,0,0,0.05f);
+        rayHandler.setAmbientLight(0,0,0,0.25f);
         rayHandler.setBlur(true);
         rayHandler.setBlurNum(7);
         //rayHandler.setGammaCorrection(true);
@@ -422,37 +427,6 @@ public class Stage_1 extends State {
         lightMoon2.setContactFilter(Constants.FILTER_LIGHT);
     }
 
-    public void ballSpeedLimiter() {
-        float x = ball.getBody().getLinearVelocity().x;
-        float y = ball.getBody().getLinearVelocity().y;
-        float absX = Math.abs(x);
-        float absY = Math.abs(y);
-        int speedLimitMax = 31;
-        int speedLimitMin = 11;
-
-        if (absX + absY < 20) font.setColor(Color.GREEN);
-        else  if (absX + absY >= 20 && absX + absY < 25) font.setColor(Color.YELLOW);
-        else   font.setColor(Color.RED);
-
-        if (absX + absY > speedLimitMax) {
-            x = x >= 0 ? speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100));
-            y = y >= 0 ? speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100));
-            ball.getBody().setLinearVelocity(x,y);
-        }
-        else if (absX + absY < speedLimitMin && is_start2) {
-            x = x >= 0 ? speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100));
-            y = y >= 0 ? speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100));
-            ball.getBody().setLinearVelocity(x,y);
-        }
-        else if (absX + absY == 0) {
-            ball.getBody().setLinearVelocity(0,speedLimitMin);
-        }
-        else if (absX == 0) {
-            ball.getBody().applyLinearImpulse(0.01f,0,0.01f,0,false);
-        }
-
-    }
-
     public void musicMasterVolume() {
         if (is_vortex_glowing) {
             SOUND.switchDayAndNightEnvironmentVolume("Day", 0);
@@ -466,7 +440,6 @@ public class Stage_1 extends State {
             SOUND.switchDayAndNightEnvironmentVolume("Day", 0);
             SOUND.switchDayAndNightEnvironmentVolume("Night", 1);
         }
-
     }
 
     public void activatePortal() {
@@ -476,17 +449,31 @@ public class Stage_1 extends State {
             portalLight.setXray(true);
             is_vortex_glowing = true;
         }
-        if (portalLight.getDistance() < 10) portalLight.setDistance(portalLight.getDistance() + 0.01f);
+        if (portalLight.getDistance() < 10) {
+            portalLight.setDistance(portalLight.getDistance() + 0.01f);
+        }
     }
 
     public void endGame() {
-        if (vortex.getSPRITE().getScaleX() < 37) vortex.getSPRITE().scale(0.06f);
+        if (vortex.getSPRITE().getScaleX() < 37) {
+            vortex.getSPRITE().scale(0.06f);
+        }
         lightSun1.setDistance(lightSun1.getDistance()-0.15f);
         lightSun2.setDistance(lightSun2.getDistance()-0.15f);
         lightMoon1.setDistance(lightMoon1.getDistance()-0.15f);
         lightMoon2.setDistance(lightMoon2.getDistance()-0.15f);
         lightBall.setDistance(lightBall.getDistance()-0.15f);
         portalLight.setDistance(portalLight.getDistance()-0.15f);
+    }
+
+    public void ballOutTheScreenCheck() {
+        if ((ball.getPosition().y <= 1 && player.isAlive)
+                || (ball.getPosition().y >= 40 && Constants.isVortexActive && player.isAlive)
+                || (ball.getPosition().x <= 0 && Constants.isVortexActive && player.isAlive)
+                || (ball.getPosition().x >= 24 && Constants.isVortexActive && player.isAlive)) {
+            player.isAlive = false;
+            SOUND.play("DEATH");
+        }
     }
 
     public void body_delete() {
@@ -512,10 +499,6 @@ public class Stage_1 extends State {
     public void resize (int width, int height) {
         EXTENDED_VIEWPORT.update(width, height, false);
         SPRITE_BATCH.setProjectionMatrix(camera.combined);
-        //vp.update(width, height, true);
-
-        // cam.setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT); // +++
-        //batch.setProjectionMatrix(cam.combined); // +++
     }
 }
 

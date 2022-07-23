@@ -85,7 +85,6 @@ public class Animator  {
         ANIMATION = new Animation<TextureRegion>(Duration, animationFrames);
     }
 
-
     public TextureRegion getCurrentFrame() {
         time += Gdx.graphics.getDeltaTime();
         if (time>= frameDuration *animationFrames.length) {

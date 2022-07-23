@@ -5,174 +5,183 @@ filter: Nearest,Nearest
 repeat: none
 AnimationArrow
   rotate: false
-  xy: 1, 870
+  xy: 1, 1889
   size: 1984, 146
   orig: 1984, 146
   offset: 0, 0
   index: -1
 AnimationVortex
   rotate: false
-  xy: 1, 268
+  xy: 1, 1287
   size: 800, 600
   orig: 800, 600
   offset: 0, 0
   index: -1
 AnimationBird
   rotate: false
-  xy: 803, 247
+  xy: 1, 664
   size: 709, 621
   orig: 709, 621
   offset: 0, 0
   index: -1
+bell
+  rotate: false
+  xy: 803, 944
+  size: 246, 943
+  orig: 246, 943
+  offset: 0, 0
+  index: -1
 Moon
   rotate: false
-  xy: 1514, 455
+  xy: 1, 249
   size: 413, 413
   orig: 413, 413
   offset: 0, 0
   index: -1
+chain
+  rotate: false
+  xy: 1051, 1411
+  size: 246, 476
+  orig: 246, 476
+  offset: 0, 0
+  index: -1
 Sun
   rotate: false
-  xy: 1, 1
+  xy: 416, 397
   size: 265, 265
   orig: 265, 265
   offset: 0, 0
   index: -1
+bellImpulse
+  rotate: false
+  xy: 1, 42
+  size: 205, 205
+  orig: 205, 205
+  offset: 0, 0
+  index: -1
+LOTR
+  rotate: false
+  xy: 1051, 1207
+  size: 200, 202
+  orig: 200, 202
+  offset: 0, 0
+  index: -1
 Vortex2
   rotate: false
-  xy: 1514, 253
+  xy: 1299, 1687
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 AnimationDeath
   rotate: false
-  xy: 268, 234
+  xy: 1501, 1855
   size: 352, 32
   orig: 352, 32
   offset: 0, 0
   index: -1
 Vortex1
   rotate: false
-  xy: 1716, 272
+  xy: 208, 66
   size: 181, 181
   orig: 181, 181
   offset: 0, 0
   index: -1
 AnimationRun
   rotate: false
-  xy: 268, 200
+  xy: 416, 363
   size: 256, 32
   orig: 256, 32
   offset: 0, 0
   index: -1
 Platform
   rotate: false
-  xy: 268, 135
+  xy: 1051, 1142
   size: 189, 63
   orig: 189, 63
   offset: 0, 0
   index: -1
 Shield
   rotate: false
-  xy: 622, 245
+  xy: 1, 19
   size: 101, 21
   orig: 101, 21
   offset: 0, 0
   index: -1
 Ball
   rotate: false
-  xy: 1987, 976
+  xy: 1987, 1995
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 Ball1
   rotate: false
-  xy: 1929, 828
+  xy: 712, 1245
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 Ball2
   rotate: false
-  xy: 268, 93
+  xy: 1253, 1369
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 Ball3
   rotate: false
-  xy: 459, 158
+  xy: 1299, 1645
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 Death
   rotate: false
-  xy: 526, 200
+  xy: 1501, 1821
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Platform1hp
   rotate: false
-  xy: 1716, 254
+  xy: 1855, 1871
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 Platform2hp
   rotate: false
-  xy: 725, 250
+  xy: 208, 48
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 Platform3hp
   rotate: false
-  xy: 310, 117
+  xy: 416, 345
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 Platform4hp
   rotate: false
-  xy: 501, 182
+  xy: 1051, 1124
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 Platform5hp
   rotate: false
-  xy: 560, 216
+  xy: 1, 1
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 Stay
   rotate: false
-  xy: 1987, 942
+  xy: 1987, 1961
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-
-ATLAS2.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-bell
-  rotate: false
-  xy: 1, 1
-  size: 246, 943
-  orig: 246, 943
-  offset: 0, 0
-  index: -1
-chain
-  rotate: false
-  xy: 249, 468
-  size: 246, 476
-  orig: 246, 476
   offset: 0, 0
   index: -1

@@ -67,14 +67,14 @@ public class ContactWatcher implements ContactListener {
         if (Fix_B.getUserData().equals("ball") && (Fix_A.getUserData().equals("bell1"))) {
             Body_A.getFixtureList().get(0).setFilterData(Constants.FILTER_VOID);
             Constants.isBell1Hit = true;
-            sound.play("bell");
+            sound.play("BELL");
             Gdx.input.vibrate(2000);
         }
 
         else if (Fix_B.getUserData().equals("ball") && (Fix_A.getUserData().equals("bell2"))) {
             Body_A.getFixtureList().get(0).setFilterData(Constants.FILTER_VOID);
             Constants.isBell2Hit = true;
-            sound.play("bell");
+            sound.play("BELL");
             Gdx.input.vibrate(2000);
         }
 
