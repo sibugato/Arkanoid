@@ -42,26 +42,43 @@ public class Platform {
         sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
     }
 
-    public void update(float dt) { position.set(body.getPosition()); }
-
-    public void render(SpriteBatch sb) {
-        sprite.setPosition(body.getPosition().x-1.5f,body.getPosition().y-0.5f);
-        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-
-        if (body.getFixtureList().get(0).getUserData().equals("platform5")) sprite.setRegion(texture_5hp);
-        else if (body.getFixtureList().get(0).getUserData().equals("platform4")) sprite.setRegion(texture_4hp);
-        else if (body.getFixtureList().get(0).getUserData().equals("platform3")) sprite.setRegion(texture_3hp);
-        else if (body.getFixtureList().get(0).getUserData().equals("platform2")) sprite.setRegion(texture_2hp);
-        else if (body.getFixtureList().get(0).getUserData().equals("platform1")) sprite.setRegion(texture_1hp);
-        else sprite.setRegion(texture);
-
-        if (!body.getFixtureList().get(0).getUserData().equals("platform0")) sprite.draw(sb);
+    public void update(float dt) {
+        position.set(body.getPosition());
     }
 
-    public Vector2 getPosition() { return position; }
-    public Body getBody() {return body;}
+    public void render(SpriteBatch sb) {
+        sprite.setPosition(body.getPosition().x - 1.5f, body.getPosition().y - 0.5f);
+        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+        String platformUserData = body.getFixtureList().get(0).getUserData().toString();
+        switch (platformUserData) {
+            case ("platform5"):
+                sprite.setRegion(texture_5hp);
+                break;
+            case ("platform4"):
+                sprite.setRegion(texture_4hp);
+                break;
+            case ("platform3"):
+                sprite.setRegion(texture_3hp);
+                break;
+            case ("platform2"):
+                sprite.setRegion(texture_2hp);
+                break;
+            case ("platform1"):
+                sprite.setRegion(texture_1hp);
+                break;
+            default:
+                sprite.setRegion(texture);
+        }
+        if (!body.getFixtureList().get(0).getUserData().equals("platform0")) {
+            sprite.draw(sb);
+        }
+    }
 
-
-
+    public Vector2 getPosition() {
+        return position;
+    }
+    public Body getBody() {
+        return body;
+    }
 }
 

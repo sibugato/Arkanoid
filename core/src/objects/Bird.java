@@ -82,7 +82,6 @@ public class Bird {
            bird.setRegion(ANIMATION_LEFT.getCurrentFrame());
            bird2.setRegion(ANIMATION_LEFT_2.getCurrentFrame());
        }
-
         CHAIN.draw(sb);
         CHAIN2.draw(sb);
         bird.draw(sb);

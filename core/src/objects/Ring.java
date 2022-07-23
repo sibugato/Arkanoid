@@ -18,8 +18,6 @@ public class Ring {
     private Body body;
     float rotate = 0;
 
-
-
     public Ring(int x, int y, World world) {
         position = new Vector2(x,y);
         body = BodyMaker.createCircle(world,x,y,3f, BodyDef.BodyType.StaticBody, Constants.FILTER_CIRCLE, 0.1f, 0.1f,0.1f,0,false,"circle");
@@ -34,13 +32,18 @@ public class Ring {
     }
 
     public void render (SpriteBatch sb) {
-        //sb.draw(animation.get_current_frame(),body.getPosition().x-2,body.getPosition().y-2,4,4 );
         sprite.draw(sb);
     }
 
+    public Vector2 get_position() {
+        return position;
+    }
 
-    public Vector2 get_position() { return position; }
-    public Body getBody() {return body;}
-    public Sprite getSprite() { return sprite; }
+    public Body getBody() {
+        return body;
+    }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 }

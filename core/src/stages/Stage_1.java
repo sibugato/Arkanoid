@@ -42,7 +42,7 @@ import objects.Bird;
 import objects.Ring;
 import objects.Platform;
 import objects.Player;
-import objects.Sun;
+import objects.SunAndMoon;
 import objects.Vortex;
 import states.GameStateManager;
 import states.State;
@@ -74,7 +74,7 @@ public class Stage_1 extends State {
     private ArrayList<Platform> platforms = new ArrayList<>();
     private Player player;
     private Ball ball;
-    private Sun sun;
+    private SunAndMoon sunAndMoon;
     private Vortex vortex;
     private Body bodyWalls;
     private Body bodyGround;
@@ -115,7 +115,7 @@ public class Stage_1 extends State {
         ball = new Ball(-10,10, WORLD);
         player = new Player(10,3, WORLD);
         vortex = new Vortex(12,20, WORLD);
-        sun = new Sun(12,0, WORLD);
+        sunAndMoon = new SunAndMoon(12,0, WORLD);
         bell1 = new Bell(1,31, WORLD, "bell1");
         bell2 = new Bell(20.6f,31, WORLD, "bell2");
         bird1 = new Bird(30,10, WORLD);
@@ -156,7 +156,7 @@ public class Stage_1 extends State {
         if (!is_arrow) ball.update(dt);
         player.update(dt);
         vortex.update(dt);
-        sun.update(dt);
+        sunAndMoon.update(dt);
         bird1.update(dt);
         bird2.update(dt);
         ring.update(dt);
@@ -238,7 +238,7 @@ public class Stage_1 extends State {
 
         ring.render(SPRITE_BATCH);
         for (Platform P : platforms) P.render(SPRITE_BATCH);
-        sun.render(SPRITE_BATCH);
+        sunAndMoon.render(SPRITE_BATCH);
         //boss.render(sb);
         bird1.render(SPRITE_BATCH);
         bird2.render(SPRITE_BATCH);
@@ -319,8 +319,8 @@ public class Stage_1 extends State {
     protected void handleInput() {
         if (Constants.isRestartAllowed) {
             Constants.isGameRestarted = true;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) gsm.push(new Stage_1(gsm));
-            if(Gdx.input.justTouched()) {  Constants.isTouchUp = false; gsm.push(new TemporaryScreen(gsm)); }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) gameStateManager.push(new Stage_1(gameStateManager));
+            if(Gdx.input.justTouched()) {  Constants.isTouchUp = false; gameStateManager.push(new TemporaryScreen(gameStateManager)); }
         }
 
 
@@ -402,22 +402,22 @@ public class Stage_1 extends State {
         Color sun_c = new Color(0.8f,0.8f,0,0.5f);
         Color sun_c_2 = new Color(0.5f,0.5f,0.5f,1f);
         lightSun1 = new PointLight(rayHandler,1000, sun_c,40,15,3);
-        lightSun1.attachToBody(sun.getBody("sun"));
+        lightSun1.attachToBody(sunAndMoon.getBody("sun"));
         lightSun1.setXray(false);
         lightSun1.setContactFilter(Constants.FILTER_LIGHT);
         lightSun2 = new PointLight(rayHandler,1000, sun_c_2,60,15,3);
-        lightSun2.attachToBody(sun.getBody("sun"));
+        lightSun2.attachToBody(sunAndMoon.getBody("sun"));
         lightSun2.setXray(true);
         lightSun2.setContactFilter(Constants.FILTER_LIGHT);
 
         Color moon_c = new Color(0,0,0.3f,0.75f);
         Color moon_c2 = new Color(0.15f,0.15f,0.50f,0.25f);
         lightMoon1 = new PointLight(rayHandler,1000, moon_c,11,15,3);
-        lightMoon1.attachToBody(sun.getBody("moon"));
+        lightMoon1.attachToBody(sunAndMoon.getBody("moon"));
         lightMoon1.setXray(false);
         lightMoon1.setContactFilter(Constants.FILTER_LIGHT);
         lightMoon2 = new PointLight(rayHandler,1000, moon_c2,35,15,3);
-        lightMoon2.attachToBody(sun.getBody("moon"));
+        lightMoon2.attachToBody(sunAndMoon.getBody("moon"));
         lightMoon2.setXray(true);
         lightMoon2.setContactFilter(Constants.FILTER_LIGHT);
     }
@@ -458,7 +458,7 @@ public class Stage_1 extends State {
             SOUND.switchDayAndNightEnvironmentVolume("Day", 0);
             SOUND.switchDayAndNightEnvironmentVolume("Night", 0);
         }
-        else if (sun.getBody("sun").getPosition().y > 0) {
+        else if (sunAndMoon.getBody("sun").getPosition().y > 0) {
             SOUND.switchDayAndNightEnvironmentVolume("Day", 1);
             SOUND.switchDayAndNightEnvironmentVolume("Night", 0);
         }

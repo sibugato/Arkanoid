@@ -23,7 +23,6 @@ public class Bell {
             bellImpulse2 = new Sprite(new Texture("bellImpulse.png")),
             bellImpulse3 = new Sprite(new Texture("bellImpulse.png"));
 
-
     private float bellImpulseAlpha = 0.5f;
     private boolean isHit = false;
 
@@ -55,7 +54,9 @@ public class Bell {
     public void render (SpriteBatch sb) {
         sprite.draw(sb);
         if (isHit && bellImpulseAlpha > 0) {
+
             bellImpulseAlpha = bellImpulseAlpha - 0.002f;
+
             bellImpulse1.draw(sb);
             bellImpulse1.scale(0.15f);
             bellImpulse1.setAlpha(bellImpulseAlpha);
@@ -67,13 +68,19 @@ public class Bell {
             bellImpulse3.draw(sb);
             bellImpulse3.scale(0.05f);
             bellImpulse3.setAlpha(bellImpulseAlpha + 0.2f);
-
         }
     }
 
-    public Vector2 getPosition() { return position; }
-    public Sprite getSprite() { return sprite; }
-    public Body getBody() { return body; }
-    public void setIsHit() { isHit = true;}
-
+    public Vector2 getPosition() {
+        return position;
+    }
+    public Sprite getSprite() {
+        return sprite;
+    }
+    public Body getBody() {
+        return body;
+    }
+    public void setIsHit() {
+        isHit = true;
+    }
 }

@@ -16,10 +16,10 @@ import com.sibugato.arkanoid_souls.Resources;
 
 public class Player {
 
-    private final Animator ANIMATION_RUN_LEFT =  new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationRun"),1,8,0.07f,true, false);
-    private final Animator ANIMATION_RUN_RIGHT =  new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationRun"),1,8,0.07f,true, true);
-    private final Animator ANIMATION_DEATH_LEFT =  new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationDeath"),1,11,0.1f,false, false);
-    private final Animator ANIMATION_DEATH_RIGHT =  new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationDeath"),1,11,0.1f,false, true);
+    private final Animator ANIMATION_RUN_LEFT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationRun"),1,8,0.07f,true, false);
+    private final Animator ANIMATION_RUN_RIGHT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationRun"),1,8,0.07f,true, true);
+    private final Animator ANIMATION_DEATH_LEFT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationDeath"),1,11,0.1f,false, false);
+    private final Animator ANIMATION_DEATH_RIGHT = new Animator(Resources.TEXTURE_ATLAS.findRegion("AnimationDeath"),1,11,0.1f,false, true);
     private final TextureRegion TEXTURE_STAY_LEFT = new TextureRegion(Resources.TEXTURE_ATLAS.findRegion("Stay"));
     private final TextureRegion TEXTURE_STAY_RIGHT = new TextureRegion(Resources.TEXTURE_ATLAS.findRegion("Stay"));
 
@@ -43,60 +43,82 @@ public class Player {
 
     public void render (SpriteBatch sb) {
         sb.draw(animationUpdate(),position.x+0.5f,position.y-2.25f,3,3);
-        if (isAlive) sb.draw(Resources.TEXTURE_ATLAS.findRegion("Shield"), position.x, position.y,4,0.65f);
+        if (isAlive) {
+            sb.draw(Resources.TEXTURE_ATLAS.findRegion("Shield"), position.x, position.y,4,0.65f);
+        }
     }
 
-    public void move (String direction, Vector3 touchPos)
-    {
+    public void move (String direction, Vector3 touchPos) {
         if (isAlive) {
-            if (direction.equals("right")) {
-                body.setTransform(position.x+= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
-                isRun = true;
-                isFacingRight = true;
-            }
-            if (direction.equals("left"))  {
-                body.setTransform(position.x-= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
-                isRun = true;
-                isFacingRight = false;
-            }
-            if (direction.equals("stop")) isRun = false;
-
-            if (direction.equals("touch")) {
-            if (touchPos.x >= body.getPosition().x && touchPos.x - body.getPosition().x >= 2.5f) {
-                isFacingRight = true;
-                isRun = true;
-                body.setTransform(position.x+= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
-                Constants.isTouchUp = false;
-            }
-                else if (touchPos.x - body.getPosition().x < 1.5f) {
-                    isFacingRight = false;
+            switch (direction) {
+                case ("right"):
+                    body.setTransform(position.x+= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
                     isRun = true;
-                body.setTransform(position.x-= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
-                }
+                    isFacingRight = true;
+                    break;
+                case ("left"):
+                    body.setTransform(position.x-= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
+                    isRun = true;
+                    isFacingRight = false;
+                    break;
+                case ("stop"):
+                    isRun = false;
+                    break;
+                case ("touch"):
+                    if (touchPos.x >= body.getPosition().x && touchPos.x - body.getPosition().x >= 2.5f) {
+                        isFacingRight = true;
+                        isRun = true;
+                        body.setTransform(position.x+= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
+                        Constants.isTouchUp = false;
+                        }
+                    else if (touchPos.x - body.getPosition().x < 1.5f) {
+                        isFacingRight = false;
+                        isRun = true;
+                        body.setTransform(position.x-= 15* Gdx.graphics.getDeltaTime(), position.y, 0);
+                        }
+                    break;
             }
-
-
-
-            if (position.x < 0) body.setTransform(0, body.getPosition().y,0);
-            if (position.x > (float) ArkanoidSouls.WIDTH / 20-4) body.setTransform((float) ArkanoidSouls.WIDTH / 20-4, body.getPosition().y,0); }
+            if (position.x < 0) {
+                body.setTransform(0, body.getPosition().y,0);
+            }
+            if (position.x > (float) ArkanoidSouls.WIDTH / 20-4) {
+                body.setTransform((float) ArkanoidSouls.WIDTH / 20-4, body.getPosition().y,0);
+            }
+        }
     }
 
     public TextureRegion animationUpdate() {
         if (isAlive) {
-            if (isRun && InputController.isRightKeyDown && !InputController.isLeftKeyDown) return ANIMATION_RUN_LEFT.getCurrentFrame();
-            else if (isRun && InputController.isLeftKeyDown && !InputController.isRightKeyDown) return ANIMATION_RUN_RIGHT.getCurrentFrame();
-            else if(isRun && !isFacingRight) return ANIMATION_RUN_RIGHT.getCurrentFrame();
-            else if(isRun && isFacingRight) return ANIMATION_RUN_LEFT.getCurrentFrame();
-            else if (isFacingRight) return TEXTURE_STAY_RIGHT;
-            else return TEXTURE_STAY_LEFT;
+            if (isRun && InputController.isRightKeyDown && !InputController.isLeftKeyDown) {
+                return ANIMATION_RUN_LEFT.getCurrentFrame();
+            }
+            else if (isRun && InputController.isLeftKeyDown && !InputController.isRightKeyDown) {
+                return ANIMATION_RUN_RIGHT.getCurrentFrame();
+            }
+            else if (isRun && !isFacingRight) {
+                return ANIMATION_RUN_RIGHT.getCurrentFrame();
+            }
+            else if (isRun && isFacingRight) {
+                return ANIMATION_RUN_LEFT.getCurrentFrame();
+            }
+            else if (isFacingRight) {
+                return TEXTURE_STAY_RIGHT;
+            }
+            else {
+                return TEXTURE_STAY_LEFT;
+            }
         }
-
         else {
-            if (isFacingRight) return ANIMATION_DEATH_LEFT.getCurrentFrame();
-            else return ANIMATION_DEATH_RIGHT.getCurrentFrame();
+            if (isFacingRight) {
+                return ANIMATION_DEATH_LEFT.getCurrentFrame();
+            }
+            else {
+                return ANIMATION_DEATH_RIGHT.getCurrentFrame();
+            }
         }
     }
 
-    public Body getBody() {return body;}
-
+    public Body getBody() {
+        return body;
+    }
 }

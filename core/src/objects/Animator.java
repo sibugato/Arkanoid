@@ -19,7 +19,7 @@ public class Animator  {
     private boolean isLooping;
     private boolean isEnd = false;
 
-
+    // for texture
     public Animator(Texture T, int ROWS, int COLUMNS, float Duration, boolean Looping, boolean Flip) {
         isLooping = Looping;
         IS_FLIP = Flip;
@@ -29,15 +29,17 @@ public class Animator  {
         animationFrames = new TextureRegion[ROWS*COLUMNS];
 
         int index = 0;
-
-        for (int i = 0; i < ROWS; i++)
-            for (int j = 0; j < COLUMNS; j++)
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 animationFrames[index++] = tmp[i][j];
+            }
+        }
 
         if (IS_FLIP) for (int i = 0; i < animationFrames.length ; i++)  animationFrames[i].flip(true,false);
         ANIMATION = new Animation<TextureRegion>(Duration, animationFrames);
     }
 
+    // for texture region
     public Animator(TextureRegion T, int ROWS, int COLUMNS, float Duration, boolean Looping, boolean Flip) {
         isLooping = Looping;
         IS_FLIP = Flip;
@@ -47,9 +49,11 @@ public class Animator  {
         final int height = T.getRegionHeight()/ROWS;
         tmp = new TextureRegion[ROWS][COLUMNS];
 
-        for (int i = 0; i < ROWS; i++)
-            for (int j = 0; j < COLUMNS; j++)
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 tmp[i][j] = new TextureRegion(T, width*j, height*i, width,height );
+            }
+        }
 
         animationFrames = new TextureRegion[ROWS*COLUMNS];
 
@@ -62,6 +66,7 @@ public class Animator  {
         ANIMATION = new Animation<TextureRegion>(Duration, animationFrames);
     }
 
+    // for enumeration in texture atlas
     public Animator(TextureAtlas T, String name, int FRAMES, float Duration, boolean Looping, boolean Flip) {
         frameDuration = Duration;
         IS_FLIP = Flip;
@@ -69,15 +74,23 @@ public class Animator  {
         isLooping = Looping;
         TextureRegion[] animationFrames = new TextureRegion[FRAMES];
 
-        for (int i = 0; i < FRAMES ; i++) animationFrames[i] = T.findRegion(String.format(name+"%d", i));
-        if (IS_FLIP) for (int i = 0; i < animationFrames.length ; i++) animationFrames[i].flip(true,false);
+        for (int i = 0; i < FRAMES ; i++) {
+            animationFrames[i] = T.findRegion(String.format(name+"%d", i));
+        }
+        if (IS_FLIP) {
+            for (int i = 0; i < animationFrames.length ; i++) {
+                animationFrames[i].flip(true,false);
+            }
+        }
         ANIMATION = new Animation<TextureRegion>(Duration, animationFrames);
     }
 
 
     public TextureRegion getCurrentFrame() {
         time += Gdx.graphics.getDeltaTime();
-        if (time>= frameDuration *animationFrames.length) isEnd = true;
+        if (time>= frameDuration *animationFrames.length) {
+            isEnd = true;
+        }
         TextureRegion tmp;
         tmp = ANIMATION.getKeyFrame(time, isLooping);
         return tmp;

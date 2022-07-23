@@ -4,14 +4,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
 public abstract class State {
+
     protected OrthographicCamera camera;
-    protected Vector3 mouse;
-    protected GameStateManager gsm;
+    protected GameStateManager gameStateManager;
 
     public State(GameStateManager gsm) {
-        this.gsm = gsm;
+        this.gameStateManager = gsm;
         camera = new OrthographicCamera();
-        mouse = new Vector3();
     }
 
     protected abstract void handleInput();

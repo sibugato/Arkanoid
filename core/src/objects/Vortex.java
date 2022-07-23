@@ -18,7 +18,6 @@ public class Vortex {
     private final Animator ANIMATION = new Animator(new TextureRegion(Resources.TEXTURE_ATLAS.findRegion("AnimationVortex")), 3,4,0.1f,false, false);
     private final Vector2 POSITION;
     private final Body BODY;
-
     private float rotate = 0;
 
     public Vortex (int x, int y, World world) {
@@ -33,20 +32,29 @@ public class Vortex {
         if (SPRITE.getScaleX() <36) {
             rotate += 200 * Gdx.graphics.getDeltaTime();
         }
-        else Gdx.app.exit();
-
-
+        else {
+            Gdx.app.exit();
+        }
         SPRITE.setRotation(rotate);
-        if (Constants.isVortexActive) SPRITE.setRegion(ANIMATION.getCurrentFrame());
+        if (Constants.isVortexActive) {
+            SPRITE.setRegion(ANIMATION.getCurrentFrame());
+        }
     }
 
     public void render (SpriteBatch sb) {
         SPRITE.draw(sb);
     }
 
-    public Vector2 getPosition() { return POSITION; }
-    public Body getBody() {return BODY;}
-    public Sprite getSPRITE() { return SPRITE; }
-    public boolean getAnimationIsEnd() { return ANIMATION.getIsEnd();}
-
+    public Vector2 getPosition() {
+        return POSITION;
+    }
+    public Body getBody() {
+        return BODY;
+    }
+    public Sprite getSPRITE() {
+        return SPRITE;
+    }
+    public boolean getAnimationIsEnd() {
+        return ANIMATION.getIsEnd();
+    }
 }

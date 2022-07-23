@@ -32,17 +32,7 @@ public class ContactWatcher implements ContactListener {
         }
     }
 
-    public void endContact(Contact contact) {
-
-        Fixture Fix_A = contact.getFixtureA();
-        Fixture Fix_B = contact.getFixtureB();
-        Body Body_A = contact.getFixtureA().getBody();
-        Body Body_B = contact.getFixtureA().getBody();
-
-        if (Fix_A.getUserData() != null && Fix_B.getUserData().equals("ball") && !Fix_A.getUserData().equals("platform0")) {
-            Ball.RAGE = true;
-        }
-    }
+    public void endContact(Contact contact) {}
 
     public void preSolve (Contact contact, Manifold oldManifold) {
 

@@ -11,7 +11,7 @@ import com.sibugato.arkanoid_souls.BodyMaker;
 import com.sibugato.arkanoid_souls.Constants;
 import com.sibugato.arkanoid_souls.Resources;
 
-public class Sun {
+public class SunAndMoon {
 
     Sprite sun = new Sprite(new TextureRegion(Resources.TEXTURE_ATLAS.findRegion("Sun")));
     Sprite moon = new Sprite(new TextureRegion(Resources.TEXTURE_ATLAS.findRegion("Moon")));
@@ -20,8 +20,7 @@ public class Sun {
     private Body bodyAnchor;
     private Body bodyMoon;
 
-
-    public Sun (int x, int y, World world) {
+    public SunAndMoon(int x, int y, World world) {
         bodySun = BodyMaker.createCircle(world,x,y+35,2f, BodyDef.BodyType.DynamicBody, Constants.FILTER_VOID,0.001f,0,0,0,false,"sun");
         bodyMoon = BodyMaker.createCircle(world,x,y-35,2f, BodyDef.BodyType.DynamicBody, Constants.FILTER_VOID,0.001f,0,0,0,false,"moon");
         bodyAnchor = BodyMaker.createCircle(world,x,y,3f, BodyDef.BodyType.StaticBody,Constants.FILTER_VOID,0,0,0,0,false,"anchor");
@@ -42,8 +41,14 @@ public class Sun {
     }
 
     public Body getBody(String Name) {
-        if (Name.equalsIgnoreCase("sun")) return bodySun;
-        else if (Name.equalsIgnoreCase("moon")) return bodyMoon;
-        else return null;
+        if (Name.equalsIgnoreCase("sun")) {
+            return bodySun;
+        }
+        else if (Name.equalsIgnoreCase("moon")) {
+            return bodyMoon;
+        }
+        else {
+            return null;
+        }
     }
 }
