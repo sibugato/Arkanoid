@@ -83,7 +83,7 @@ public class Stage_1 extends State {
     private PointLight lightSun1, lightSun2, lightMoon1, lightMoon2, lightBall, portalLight;;
 
     private boolean is_start = false;
-    public static boolean is_start2 = false;
+    private boolean is_start2 = false;
     private boolean is_arrow = true;
     private boolean is_vortex_glowing = false;
     private float x_speed = 0;
@@ -92,6 +92,9 @@ public class Stage_1 extends State {
     private float ringAlpha = 1;
     private float ballAlpha = 1;
     private float youDiedScreenAlpha = 0;
+
+    private int width = 0;
+    private int height = 0;
 
 
     public Stage_1(GameStateManager gsm) {
@@ -157,7 +160,7 @@ public class Stage_1 extends State {
         bird1.update(dt);
         bird2.update(dt);
         ring.update(dt);
-        ball.ballSpeedLimiter();
+        ballSpeedLimiter();
         ballOutTheScreenCheck();
         if (Ball.isBounce) {
             Ball.isBounce = false;
@@ -213,7 +216,6 @@ public class Stage_1 extends State {
     }
 
     public void render() {
-        SPRITE_BATCH.setProjectionMatrix(camera.combined);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         WORLD.step(1/60f,4,4);
@@ -442,6 +444,44 @@ public class Stage_1 extends State {
         }
     }
 
+    public void ballSpeedLimiter() {
+        float x = ball.getBody().getLinearVelocity().x;
+        float y = ball.getBody().getLinearVelocity().y;
+        float absX = Math.abs(x);
+        float absY = Math.abs(y);
+        int speedLimitMax = 31;
+        int speedLimitMin = 11;
+
+        /*
+        if (absX + absY < 20) {
+            font.setColor(Color.GREEN);
+        }
+        else if (absX + absY >= 20 && absX + absY < 25) {
+            font.setColor(Color.YELLOW);
+        }
+        else {
+            font.setColor(Color.RED);
+        }
+        */
+
+        if (absX + absY > speedLimitMax) {
+            x = x >= 0 ? speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100));
+            y = y >= 0 ? speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100));
+            ball.getBody().setLinearVelocity(x,y);
+        }
+        else if (absX + absY < speedLimitMin && is_start2) {
+            x = x >= 0 ? speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100));
+            y = y >= 0 ? speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100));
+            ball.getBody().setLinearVelocity(x,y);
+        }
+        else if (absX + absY == 0) {
+            ball.getBody().setLinearVelocity(0,speedLimitMin);
+        }
+        else if (absX == 0) {
+            ball.getBody().applyLinearImpulse(0.01f,0,0.01f,0,false);
+        }
+    }
+
     public void activatePortal() {
         if (!is_vortex_glowing) {
             portalLight = new PointLight(rayHandler, 100, Color.BLUE, 0, 40, 3);
@@ -499,6 +539,9 @@ public class Stage_1 extends State {
     public void resize (int width, int height) {
         EXTENDED_VIEWPORT.update(width, height, false);
         SPRITE_BATCH.setProjectionMatrix(camera.combined);
+        rayHandler.setCombinedMatrix(camera.combined);
+        this.width = width;
+        this.height = height;
     }
 }
 

@@ -43,50 +43,14 @@ public class Ball {
         SPRITE.draw(sb);
     }
 
-    public void ballSpeedLimiter() {
-        float x = BODY.getLinearVelocity().x;
-        float y = BODY.getLinearVelocity().y;
-        float absX = Math.abs(x);
-        float absY = Math.abs(y);
-        int speedLimitMax = 31;
-        int speedLimitMin = 11;
-
-        /*
-        if (absX + absY < 20) {
-            font.setColor(Color.GREEN);
-        }
-        else if (absX + absY >= 20 && absX + absY < 25) {
-            font.setColor(Color.YELLOW);
-        }
-        else {
-            font.setColor(Color.RED);
-        }
-        */
-
-        if (absX + absY > speedLimitMax) {
-            x = x >= 0 ? speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absX / ((absX + absY) / 100));
-            y = y >= 0 ? speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMax * (float) 0.01 * (absY / ((absX + absY) / 100));
-            BODY.setLinearVelocity(x,y);
-        }
-        else if (absX + absY < speedLimitMin && Stage_1.is_start2) {
-            x = x >= 0 ? speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absX / ((absX + absY) / 100));
-            y = y >= 0 ? speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100)) : -speedLimitMin * (float) 0.01 * (absY / ((absX + absY) / 100));
-            BODY.setLinearVelocity(x,y);
-        }
-        else if (absX + absY == 0) {
-            BODY.setLinearVelocity(0,speedLimitMin);
-        }
-        else if (absX == 0) {
-            BODY.applyLinearImpulse(0.01f,0,0.01f,0,false);
-        }
-    }
-
     public Vector2 getPosition() {
         return POSITION;
     }
+
     public Body getBody() {
         return BODY;
     }
+
     public  Sprite getSPRITE() {
         return SPRITE;
     }

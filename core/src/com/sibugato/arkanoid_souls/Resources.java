@@ -23,7 +23,7 @@ public class Resources {
     public void play (String sound) {
         switch (sound) {
             case ("BONK") :
-                BONK_SOUND.play(0.2f*masterVolume);
+                BONK_SOUND.play(0.13f*masterVolume);
                 break;
             case ("PLATFORM_BROKE") :
                 PLATFORM_BROKE_SOUND.play(0.27f*masterVolume);
@@ -32,10 +32,10 @@ public class Resources {
                 DEATH_SOUND.play(0.5f*masterVolume);
                 break;
             case ("BELL") :
-                BELL_SOUND.play(0.35f*masterVolume);
+                BELL_SOUND.play(0.3f*masterVolume);
                 break;
             case ("FORCE") :
-                RING_FORCE_SOUND.play(1f*masterVolume);
+                RING_FORCE_SOUND.play(2f*masterVolume);
                 break;
             case ("DAY") :
                 DAY_SOUND.play();
