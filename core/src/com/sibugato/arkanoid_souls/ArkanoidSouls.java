@@ -14,32 +14,32 @@ public class ArkanoidSouls extends Game {
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "Arkanoid Souls";
 
-	public static GameStateManager gsm;
-	private SpriteBatch sb;
-	private static float dt;
+	public static GameStateManager gameStateManager;
+	private SpriteBatch spriteBatch;
+	private static float deltaTime;
 
 	public void create () {
 		Constants.CreateConstants();
-		dt  = Gdx.graphics.getDeltaTime();
-		sb = new SpriteBatch();
-		gsm = new GameStateManager();
+		deltaTime = Gdx.graphics.getDeltaTime();
+		spriteBatch = new SpriteBatch();
+		gameStateManager = new GameStateManager();
 		ScreenUtils.clear(0, 0, 0, 1);
-		gsm.push(new MainMenu(gsm));
+		gameStateManager.push(new MainMenu(gameStateManager));
 
 	}
 
 	public void render () {
-		gsm.update(dt);
-		gsm.render(sb);
+		gameStateManager.update(deltaTime);
+		gameStateManager.render(spriteBatch);
 	}
 
 	public void dispose () {
-		sb.dispose();
+		spriteBatch.dispose();
 		super.dispose();
 	}
 
 	public void resize(int width, int height) {
-		gsm.resize(width, height, sb);
+		gameStateManager.resize(width, height, spriteBatch);
 	}
 
 	public void pause() {

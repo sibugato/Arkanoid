@@ -13,21 +13,53 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.LEFT) { isLeftKeyDown = true; return isLeftKeyDown;}
-        else if (keycode == Input.Keys.RIGHT) { isRightKeyDown = true; return isRightKeyDown;}
-        if (keycode == Input.Keys.UP) { isUpKeyDown = true; return isUpKeyDown;}
-        if (keycode == Input.Keys.DOWN) { isDownKeyDown = true; return isDownKeyDown;}
-        if (keycode == Input.Keys.Z) { isZKeyDown = true; return isZKeyDown;}
-        else return false; }
+        if (keycode == Input.Keys.LEFT) {
+            isLeftKeyDown = true;
+            return isLeftKeyDown;
+        }
+        else if (keycode == Input.Keys.RIGHT) {
+            isRightKeyDown = true;
+            return isRightKeyDown;
+        }
+        if (keycode == Input.Keys.UP) {
+            isUpKeyDown = true;
+            return isUpKeyDown;
+        }
+        if (keycode == Input.Keys.DOWN) {
+            isDownKeyDown = true;
+            return isDownKeyDown;
+        }
+        if (keycode == Input.Keys.Z) {
+            isZKeyDown = true;
+            return isZKeyDown;
+        }
+        else return false;
+    }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.LEFT) { isLeftKeyDown = false; return isLeftKeyDown;}
-        else if (keycode == Input.Keys.RIGHT) { isRightKeyDown = false; return isRightKeyDown;}
-        if (keycode == Input.Keys.UP) { isUpKeyDown = false; return isUpKeyDown;}
-        if (keycode == Input.Keys.DOWN) { isDownKeyDown = false; return isDownKeyDown;}
-        if (keycode == Input.Keys.Z) { isZKeyDown = false; return isZKeyDown;}
-        else return false; }
+        if (keycode == Input.Keys.LEFT) {
+            isLeftKeyDown = false;
+            return isLeftKeyDown;
+        }
+        else if (keycode == Input.Keys.RIGHT) {
+            isRightKeyDown = false;
+            return isRightKeyDown;
+        }
+        if (keycode == Input.Keys.UP) {
+            isUpKeyDown = false;
+            return isUpKeyDown;
+        }
+        if (keycode == Input.Keys.DOWN) {
+            isDownKeyDown = false;
+            return isDownKeyDown;
+        }
+        if (keycode == Input.Keys.Z) {
+            isZKeyDown = false;
+            return isZKeyDown;
+        }
+        else return false;
+    }
 
     @Override
     public boolean keyTyped(char character) {

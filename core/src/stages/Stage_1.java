@@ -491,9 +491,9 @@ public class Stage_1 extends State {
 
     public void body_delete() {
         for (Body B : Constants.destroyList) {
-            if (!WORLD.isLocked() && B != null && Constants.isBodyDeliting) {
+            if (!WORLD.isLocked() && B != null && Constants.isBodyDeleting) {
                 WORLD.destroyBody(B);
-                Constants.isBodyDeliting = false;
+                Constants.isBodyDeleting = false;
                 SOUND.play("platform_broke");
             }
         }

@@ -30,7 +30,7 @@ public class Constants {
 
     public static ArrayList<Body> destroyList = new ArrayList<>();
 
-    public static boolean isBodyDeliting = false;
+    public static boolean isBodyDeleting = false;
     public static boolean isBell1Hit = false;
     public static boolean isBell2Hit = false;
     public static boolean isVortexActive = false;

@@ -13,7 +13,7 @@ public class Resources {
     private static final Sound BELL_SOUND = Gdx.audio.newSound(Gdx.files.internal("bell_sound.ogg"));
     private static final Sound DEATH_SOUND = Gdx.audio.newSound(Gdx.files.internal("You_Died.mp3"));
     private static final Sound PLATFORM_BROKE_SOUND = Gdx.audio.newSound(Gdx.files.internal("Platform_Broke.ogg"));
-    private static final Sound RING_FORCE = Gdx.audio.newSound(Gdx.files.internal("RingForce.mp3"));
+    private static final Sound RING_FORCE_SOUND = Gdx.audio.newSound(Gdx.files.internal("RingForce.mp3"));
 
     private static final Music DAY_SOUND = Gdx.audio.newMusic(Gdx.files.internal("day.ogg"));
     private static final Music NIGHT_SOUND = Gdx.audio.newMusic(Gdx.files.internal("night.ogg"));
@@ -35,7 +35,7 @@ public class Resources {
                 BELL_SOUND.play(0.37f*masterVolume);
                 break;
             case ("FORCE") :
-                RING_FORCE.play(1f*masterVolume);
+                RING_FORCE_SOUND.play(1f*masterVolume);
                 break;
             case ("DAY") :
                 DAY_SOUND.play();
@@ -51,10 +51,18 @@ public class Resources {
     }
 
     public void switchDayAndNightEnvironmentVolume(String sound, int volume) {
-        if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume()>0 && volume == 0) DAY_SOUND.setVolume(DAY_SOUND.getVolume()-0.001f);
-        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) DAY_SOUND.setVolume(DAY_SOUND.getVolume()+0.001f);
-        if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume()>0 && volume == 0) NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()-0.001f);
-        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()+0.001f);
+        if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume()>0 && volume == 0) {
+            DAY_SOUND.setVolume(DAY_SOUND.getVolume()-0.001f);
+        }
+        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) {
+            DAY_SOUND.setVolume(DAY_SOUND.getVolume()+0.001f);
+        }
+        if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume()>0 && volume == 0) {
+            NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()-0.001f);
+        }
+        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) {
+            NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()+0.001f);
+        }
     }
 
     public static float getMasterVolume() {
