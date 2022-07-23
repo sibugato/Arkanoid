@@ -25,9 +25,9 @@ public class Resources {
     public Resources() {}
 
     public void play (String sound) {
-        if (sound.equalsIgnoreCase("BONK")) BONK_SOUND.play(0.05f*masterVolume);
+        if (sound.equalsIgnoreCase("BONK")) BONK_SOUND.play(0.2f*masterVolume);
         else  if (sound.equalsIgnoreCase("PLATFORM_BROKE")) PLATFORM_BROKE_SOUND.play(0.27f*masterVolume);
-        else if (sound.equalsIgnoreCase("DEATH")) DEATH_SOUND.play(0.35f*masterVolume);
+        else if (sound.equalsIgnoreCase("DEATH")) DEATH_SOUND.play(0.5f*masterVolume);
         else if (sound.equalsIgnoreCase("BELL")) BELL_SOUND.play(0.37f*masterVolume);
         else if (sound.equalsIgnoreCase("FORCE")) RING_FORCE.play(1f*masterVolume);
 
@@ -54,7 +54,7 @@ public class Resources {
         return masterVolume;
     }
 
-    public static void setMasterVolume(float masterVolume) {
-        Resources.masterVolume = masterVolume;
+    public static void setMasterVolume(float value) {
+        masterVolume = value;
     }
 }

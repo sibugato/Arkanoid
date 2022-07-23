@@ -76,7 +76,7 @@ public class Constants {
         FILTER_ACTIVE_VORTEX.maskBits = BIT_LIGHT;
     }
 
-    public static void NullConstants() {
+    public static void resetConstants() {
         isBell1Hit = false;
         isBell2Hit = false;
         isVortexActive = false;

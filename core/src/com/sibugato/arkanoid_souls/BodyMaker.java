@@ -12,10 +12,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
-public  class BodyMaker {
+public class BodyMaker {
 
-    public static Body createBox (World world, float x, float y, float width, float height, BodyDef.BodyType BodyType, Filter filter,
-                                  float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
+    public static Body createBox (World world, float x, float y, float width, float height, BodyDef.BodyType BodyType, Filter filter, float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
+
         BodyDef bDef = new BodyDef();
         bDef.type = BodyType;
         bDef.position.set(x,y);
@@ -38,8 +38,7 @@ public  class BodyMaker {
         return body;
     }
 
-    public static Body createCircle (World world, float x, float y, float radius, BodyDef.BodyType BodyType, Filter filter,
-                                     float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
+    public static Body createCircle (World world, float x, float y, float radius, BodyDef.BodyType BodyType, Filter filter, float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
 
         BodyDef bDef = new BodyDef();
         bDef.type = BodyType;
@@ -63,8 +62,7 @@ public  class BodyMaker {
         return body;
     }
 
-    public static Body createChain (World world, float x, float y, Vector2[] Vectors, BodyDef.BodyType BodyType, Filter filter,
-                                    float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
+    public static Body createChain (World world, float x, float y, Vector2[] Vectors, BodyDef.BodyType BodyType, Filter filter, float density, float friction, float restitution, float gravity, boolean Bullet, String UserData) {
 
         BodyDef bDef = new BodyDef();
         bDef.type = BodyType;
