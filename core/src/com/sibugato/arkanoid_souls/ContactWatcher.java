@@ -13,8 +13,6 @@ import objects.Ball;
 
 public class ContactWatcher implements ContactListener {
 
-    // for(int j = 0; j < manifold.getNumberOfContactPoints(); j++) {}
-
     Resources sound = new Resources();
 
     public void beginContact(Contact contact) { Fixture Fix_A = contact.getFixtureA(); Fixture Fix_B = contact.getFixtureB(); Body Body_A = contact.getFixtureA().getBody(); Body Body_B = contact.getFixtureA().getBody();

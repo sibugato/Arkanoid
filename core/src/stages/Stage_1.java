@@ -455,16 +455,16 @@ public class Stage_1 extends State {
 
     public void musicMasterVolume() {
         if (is_vortex_glowing) {
-            SOUND.setVolume("Day", 0);
-            SOUND.setVolume("Night", 0);
+            SOUND.switchDayAndNightEnvironmentVolume("Day", 0);
+            SOUND.switchDayAndNightEnvironmentVolume("Night", 0);
         }
         else if (sun.getBody("sun").getPosition().y > 0) {
-            SOUND.setVolume("Day", 1);
-            SOUND.setVolume("Night", 0);
+            SOUND.switchDayAndNightEnvironmentVolume("Day", 1);
+            SOUND.switchDayAndNightEnvironmentVolume("Night", 0);
         }
         else {
-            SOUND.setVolume("Day", 0);
-            SOUND.setVolume("Night", 1);
+            SOUND.switchDayAndNightEnvironmentVolume("Day", 0);
+            SOUND.switchDayAndNightEnvironmentVolume("Night", 1);
         }
 
     }
