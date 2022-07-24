@@ -2,6 +2,9 @@ package states;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.sibugato.arkanoid_souls.ArkanoidSouls;
+
+import stages.Stage_1;
 
 public abstract class State {
 
@@ -10,6 +13,7 @@ public abstract class State {
 
     public State(GameStateManager gsm) {
         this.gameStateManager = gsm;
+        camera.setToOrtho(false, (float)  ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20);
     }
 
     protected abstract void handleInput();

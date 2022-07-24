@@ -104,7 +104,6 @@ public class Stage_1 extends State {
         Constants.isGameRestarted = false;
         Constants.resetConstants();
         Gdx.input.setInputProcessor(INPUT_CONTROLLER);
-        camera.setToOrtho(false, (float)  ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20);
         EXTENDED_VIEWPORT = new ExtendViewport((float) ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20, (float) ArkanoidSouls.WIDTH*2, (float) ArkanoidSouls.HEIGHT*2, camera);
         WORLD.setContactListener(new ContactWatcher());
         SOUND = new Resources();
@@ -217,6 +216,9 @@ public class Stage_1 extends State {
 
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        EXTENDED_VIEWPORT.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        SPRITE_BATCH.setProjectionMatrix(camera.combined);
+        rayHandler.setCombinedMatrix(camera.combined);
 
         WORLD.step(1/60f,4,4);
         if (!WORLD.isLocked() && !Constants.destroyList.isEmpty()) {
@@ -534,6 +536,7 @@ public class Stage_1 extends State {
         SPRITE_BATCH.dispose();
         DEBUG_RENDERER.dispose();
         WORLD.dispose();
+        ball.getSPRITE().getTexture().dispose();
     }
 
     public void resize (int width, int height) {

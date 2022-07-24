@@ -23,24 +23,24 @@ public class Resources {
     public void play (String sound) {
         switch (sound) {
             case ("BONK") :
-                BONK_SOUND.play(0.13f*masterVolume);
+                BONK_SOUND.play(0.08f*masterVolume);
                 break;
             case ("PLATFORM_BROKE") :
                 PLATFORM_BROKE_SOUND.play(0.27f*masterVolume);
                 break;
             case ("DEATH") :
-                DEATH_SOUND.play(0.5f*masterVolume);
+                DEATH_SOUND.play(0.35f*masterVolume);
                 break;
             case ("BELL") :
                 BELL_SOUND.play(0.3f*masterVolume);
                 break;
             case ("FORCE") :
-                RING_FORCE_SOUND.play(2f*masterVolume);
+                RING_FORCE_SOUND.play(5f*masterVolume);
                 break;
             case ("DAY") :
                 DAY_SOUND.play();
                 DAY_SOUND.setLooping(true);
-                DAY_SOUND.setVolume(0.5f*masterVolume);
+                DAY_SOUND.setVolume(0.7f*masterVolume);
                 break;
             case ("NIGHT") :
                 NIGHT_SOUND.play();
@@ -54,13 +54,13 @@ public class Resources {
         if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume()>0 && volume == 0) {
             DAY_SOUND.setVolume(DAY_SOUND.getVolume()-0.001f);
         }
-        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) {
+        else if (sound.equalsIgnoreCase("DAY") && DAY_SOUND.getVolume() < 0.7f*masterVolume && volume == 1) {
             DAY_SOUND.setVolume(DAY_SOUND.getVolume()+0.001f);
         }
         if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume()>0 && volume == 0) {
             NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()-0.001f);
         }
-        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.5f*masterVolume && volume == 1) {
+        else if (sound.equalsIgnoreCase("NIGHT") && NIGHT_SOUND.getVolume() < 0.7f*masterVolume && volume == 1) {
             NIGHT_SOUND.setVolume(NIGHT_SOUND.getVolume()+0.001f);
         }
     }

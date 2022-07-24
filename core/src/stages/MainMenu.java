@@ -23,7 +23,6 @@ public class MainMenu extends State {
     public MainMenu(GameStateManager gsm) {
         super(gsm);
         Gdx.input.setInputProcessor(inputController);
-        camera.setToOrtho(false, (float)  ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20);
         extendViewport = new ExtendViewport((float) ArkanoidSouls.WIDTH/20, (float) ArkanoidSouls.HEIGHT/20, (float) ArkanoidSouls.WIDTH*2, (float) ArkanoidSouls.HEIGHT*2, camera);
     }
 
